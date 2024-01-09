@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const citiesSlice = createSlice({
   name: 'cities',
   initialState: {
-    cities: [{ id: 1, name: 'New York', temp: [5, 6, 7, 8, 6, 5, 4, 7, 6], pressure: [], humidity: []}],
+    cities: [],
   },
   reducers: {
     addCity: (state, action) => {

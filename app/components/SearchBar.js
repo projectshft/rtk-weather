@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { addCity } from '../store/slices/cities';
 import { useForm } from 'react-hook-form';
 import countries from './countries';
-const axios = require('axios').default;
+import axios from 'axios';
 
 const SearchBar = () => {
 
@@ -13,28 +13,49 @@ const SearchBar = () => {
 
   const [country, setCountry] = useState('840');
 
-  const getLatLon = async (city, state, zip) => {
-    axios.get(`https://api.openweathermap.org/geo/1.0/direct?q=${city},${state},${zip},${country}&limit=1&appid=${process.env.OPEN_WEATHER_API_KEY}`)
-  }
-
-  const dohandleSubmit = (event) => {
-    event.preventDefault();
+  const createNewCity = (response) => {
     const id = Math.floor(Math.random() * 100000);
+    const weatherData = response.data.list;
     const cityObj = {
       id,
-      name: searchTerm,
-      temp: [],
-      pressure: [],
-      humidity: []
+      name: response.data.city.name,
+      temp: weatherData.map(item => item.main.temp),
+      avgTemp: Math.floor(weatherData.map(item => item.main.temp).reduce((a, b) => a + b, 0) / weatherData.map(item => item.main.temp).length),
+      pressure: weatherData.map(item => item.main.pressure),
+      avgPressure: Math.floor(weatherData.map(item => item.main.pressure).reduce((a, b) => a + b, 0) / weatherData.map(item => item.main.pressure).length),
+      humidity: weatherData.map(item => item.main.humidity),
+      avgHumidity: Math.floor(weatherData.map(item => item.main.humidity).reduce((a, b) => a + b, 0) / weatherData.map(item => item.main.humidity).length)
     }
     dispatch(addCity(cityObj))
-    document.querySelector('input').value = '';
+  }
+
+  const getWeather = (lat, lon) => {
+    const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${process.env.NEXT_PUBLIC_OPEN_WEATHER_API_KEY}`
+
+    axios.get(url)
+      .then((response) => {
+        createNewCity(response)
+      })
+      .catch((error) => {
+        alert(error)
+      })
+  }
+
+  const getLatLon = async (city, state, country) => {
+    let url = `https://api.openweathermap.org/geo/1.0/direct?q=${city},${state},${country}&limit=1&appid=${process.env.NEXT_PUBLIC_OPEN_WEATHER_API_KEY}`
+
+    console.log(url)
+    axios.get(url)
+      .then((response) => {
+        getWeather(response.data[0].lat, response.data[0].lon)
+      })
   }
 
   if(country !== "840") {
     return (
       <form className='d-flex w-75 align-items-center justify-content-center p-3' onSubmit={handleSubmit((data) => {
         console.log(data)
+        document.querySelector('input').value = '';
       })}>
         <label>Country</label>
         <select 
@@ -48,8 +69,6 @@ const SearchBar = () => {
           )}
         </select>
         <label>City</label><input className="form-control mx-2" type="text" placeholder="Enter..." {...register("city", { required: "This is required." })} />
-        <label className='d-none'>State</label><input className="form-control mx-2 d-none" type="text" placeholder="Enter..." {...register("state", { required: "This is required." })} />
-        <label className='d-none'>Zip</label><input className="form-control mx-2 d-none" type="text" placeholder="Enter..." {...register("zip", { required: "This is required." })} />
         <button className='btn btn-primary ml-2'>Submit</button>
       </form>
     )
@@ -57,7 +76,9 @@ const SearchBar = () => {
 
     return (
       <form className='d-flex w-75 align-items-center justify-content-center p-3' onSubmit={handleSubmit((data) => {
-        getLatLon(data.city, data.state, data.zip)
+        getLatLon(data.city, data.state, country)
+        document.querySelector('.city').value = '';
+        document.querySelector('.state').value = '';
       })}>
         <label>Country</label>
         <select 
@@ -70,9 +91,8 @@ const SearchBar = () => {
             <option key={country.isoCode} value={country.isoCode}>{country.name}</option>
           )}
         </select>
-        <label>City</label><input className="form-control mx-2" type="text" placeholder="Enter..." {...register("city", { required: "This is required." })} />
-        <label>State</label><input className="form-control mx-2 " type="text" placeholder="Enter..." {...register("state", { required: "This is required." })} />
-        <label>Zip</label><input className="form-control mx-2 " type="text" placeholder="Enter..." {...register("zip", { required: "This is required." })} />
+        <label>City</label><input className="city form-control mx-2" type="text" placeholder="Enter..." {...register("city", { required: "This is required." })} />
+        <label>State</label><input className="state form-control mx-2 " type="text" placeholder="Enter..." {...register("state", { required: "This is required." })} />
         <button className='btn btn-primary ml-2'>Submit</button>
       </form>
     )
