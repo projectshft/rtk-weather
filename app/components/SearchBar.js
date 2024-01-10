@@ -41,7 +41,7 @@ const SearchBar = () => {
       })
   }
 
-  const getLatLon = async (city, state, country) => {
+  const getLatLon = async (city, country, state = '') => {
     let url = `https://api.openweathermap.org/geo/1.0/direct?q=${city},${state},${country}&limit=1&appid=${process.env.NEXT_PUBLIC_OPEN_WEATHER_API_KEY}`
 
     console.log(url)
@@ -54,7 +54,7 @@ const SearchBar = () => {
   if(country !== "840") {
     return (
       <form className='d-flex w-75 align-items-center justify-content-center p-3' onSubmit={handleSubmit((data) => {
-        console.log(data)
+        getLatLon(data.city, country)
         document.querySelector('input').value = '';
       })}>
         <label>Country</label>
@@ -76,7 +76,7 @@ const SearchBar = () => {
 
     return (
       <form className='d-flex w-75 align-items-center justify-content-center p-3' onSubmit={handleSubmit((data) => {
-        getLatLon(data.city, data.state, country)
+        getLatLon(data.city, country, data.state)
         document.querySelector('.city').value = '';
         document.querySelector('.state').value = '';
       })}>
