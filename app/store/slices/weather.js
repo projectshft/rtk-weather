@@ -2,7 +2,7 @@ import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 const API_KEY = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
-const ROOT_URL = 'https://api.openweathermap.org/data/2.5/forecast?q='
+const ROOT_URL = 'https://api.openweathermap.org/data/2.5/forecast?q=';
 
 // request to API to get data
 export const fetchSearch = createAsyncThunk('weather/fetchSearch', async (input) => {

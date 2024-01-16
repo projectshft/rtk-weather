@@ -102,6 +102,25 @@ a {
 
 .list-group-item {
   list-style: none;
+  height: 7em;
+}
+
+.row {
+  border: 2px solid #929493;
+}
+
+.list-group-item .col-md-3 {
+  display: inline-block;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #929493
+}
+
+input {
+  background-color: #d5d5d5;
+  width: 20em;
+  border-radius: 4px;
+  height: 2.5em;
+  border: 2px dotted #929493;
 }
 
 @media (prefers-color-scheme: dark) {
