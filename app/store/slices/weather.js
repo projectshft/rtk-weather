@@ -18,7 +18,7 @@ export const weatherSlice = createSlice({
     error: null,
   },
   reducers: {},
-  // builds cases based on fetchSearch's status and executes action
+  // builds cases based on fetchSearch's status and executes action when successfull
   extraReducers: (builder) => {
     builder
       .addCase(fetchSearch.pending, (state) => {
@@ -27,6 +27,7 @@ export const weatherSlice = createSlice({
       .addCase(fetchSearch.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.searches.push(action.payload);
+        state.error = null
       })
       .addCase(fetchSearch.rejected, (state, action) => {
         state.status = 'failed';
