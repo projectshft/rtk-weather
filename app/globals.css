@@ -102,7 +102,6 @@ a {
 
 .list-group-item {
   list-style: none;
-  height: 7em;
 }
 
 .row {
@@ -121,6 +120,10 @@ input {
   border-radius: 4px;
   height: 2.5em;
   border: 2px dotted #929493;
+}
+
+.center {
+  text-align: center;
 }
 
 @media (prefers-color-scheme: dark) {
