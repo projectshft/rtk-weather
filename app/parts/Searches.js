@@ -1,4 +1,4 @@
-'use-client'
+'use client';
 import { Sparklines, SparklinesLine, SparklinesReferenceLine } from 'react-sparklines';
 import { useSelector } from 'react-redux';
 
