@@ -5,7 +5,7 @@ const CityListItem = (props) => {
   const city = props.city;
   return (
     <tr className='text-center h-3'>
-      <td>{city.name}</td>
+      <td>{city.name}, {city.country[1]}</td>
       <td>
         <Sparklines data={city.temp} svgHeight={100} svgWidth={250}>
           <SparklinesLine color='green'/>
