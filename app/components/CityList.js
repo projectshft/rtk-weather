@@ -24,6 +24,7 @@ const CityList = () => {
           <th>Tempurature (F)</th>
           <th>Pressure (hPa)</th>
           <th>Humidity (%)</th>
+          <th></th>
         </tr>
         </thead>
         <tbody>
