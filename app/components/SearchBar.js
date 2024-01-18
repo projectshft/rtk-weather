@@ -19,6 +19,7 @@ const SearchBar = () => {
     const cityObj = {
       id,
       name: response.data.city.name,
+      default: false,
       country,
       temp: weatherData.map(item => item.main.temp),
       avgTemp: Math.floor(weatherData.map(item => item.main.temp).reduce((a, b) => a + b, 0) / weatherData.map(item => item.main.temp).length),

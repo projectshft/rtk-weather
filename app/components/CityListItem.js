@@ -1,6 +1,6 @@
 import React from 'react';
 import { Sparklines, SparklinesLine, SparklinesReferenceLine } from 'react-sparklines';
-import { removeCity } from '../store/slices/cities';
+import { removeCity, makeDefault } from '../store/slices/cities';
 import { useDispatch } from 'react-redux';
 
 const CityListItem = (props) => {
@@ -8,9 +8,12 @@ const CityListItem = (props) => {
   const dispatch = useDispatch();
   const city = props.city;
 
-  const deleteCity = (cityId) => {
-    console.log(cityId)
-    dispatch(removeCity(cityId))
+  const deleteCity = () => {
+    dispatch(removeCity(city.id))
+  }
+
+  const setDefault = () => {
+    dispatch(makeDefault(city))
   }
 
   return (
@@ -39,7 +42,12 @@ const CityListItem = (props) => {
       </td>
       <td>
         <button className='btn btn-danger' onClick={() => deleteCity(city.id)}>Delete</button>
-        <button className='btn btn-primary my-2' >Set as Default</button>
+        {!city.default && (
+        <button className='btn btn-primary my-2' onClick={() => setDefault()}>Set as Default</button>
+        )}
+        {city.default && (
+          <p className='text-success'>Default City</p>
+        )}
       </td>
     </tr>
   )

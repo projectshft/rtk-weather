@@ -7,8 +7,9 @@ import { useSelector } from 'react-redux';
 const CityList = () => {
 
   const cities = useSelector(state => state.cities.cities);
+  console.log(cities)
 
-  if (!cities) {
+  if (cities.length === 0) {
     return (
       <div className='text-center'>
         <p className='lead'>Add a city to get started!</p>
@@ -28,7 +29,8 @@ const CityList = () => {
         </tr>
         </thead>
         <tbody>
-          {cities.map(city => <CityListItem key={city.id} city={city} />)}
+          {
+          cities.map(city => <CityListItem key={city.id} city={city} />)}
         </tbody>
     </table>
   )
