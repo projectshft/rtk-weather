@@ -9,7 +9,7 @@ import axios from 'axios';
 const SearchBar = () => {
 
   const dispatch = useDispatch();
-  const { register, handleSubmit, formState: {errors} } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
   const [country, setCountry] = useState('840');
 
@@ -47,16 +47,26 @@ const SearchBar = () => {
     console.log(url)
     axios.get(url)
       .then((response) => {
+        if(response.data.length === 0) {
+          alert(`No city found with the name ${city}, ${state}`)
+        } else {
         getWeather(response.data[0].lat, response.data[0].lon)
-      })
+  }})
   }
+
+  const onSubmit = (data) => {
+    getLatLon(data.city, country, data.state);
+    document.querySelector('.city').value = '';
+    document.querySelector('.state').value = '';
+    console.log(errors);
+  }
+
 
   if(country !== "840") {
     return (
-      <form className='d-flex w-75 align-items-center justify-content-center p-3' onSubmit={handleSubmit((data) => {
-        getLatLon(data.city, country)
-        document.querySelector('input').value = '';
-      })}>
+      <div className='w-100 d-flex justify-content-center align-items-center'>
+      <div className='alert alert-danger position-absolute w-50 form-alert' style={{top: "-100px", transition: "all 0.5s ease"}}>Hello</div>
+      <form className='d-flex w-75 align-items-center justify-content-center p-3 position-relative' style={{height: "125px"}} onSubmit={handleSubmit(onSubmit)}>
         <label>Country</label>
         <select 
         className="form-select mx-2" 
@@ -68,18 +78,19 @@ const SearchBar = () => {
             <option key={country.isoCode} value={country.isoCode}>{country.name}</option>
           )}
         </select>
-        <label>City</label><input className="form-control mx-2" type="text" placeholder="Enter..." {...register("city", { required: "This is required." })} />
+        <label>City</label>
+        <input className="city form-control mx-2" type="text" placeholder="Enter..." {...register("city", { required: "This is required." })} />
+        {errors.city?.type === "required" && (
+        <p className='text-danger m-0 position-absolute' style={{bottom: '15px', right: '100px'}}>*City is Required</p>
+      )}
         <button className='btn btn-primary ml-2'>Submit</button>
       </form>
+      </div>
     )
   };
 
     return (
-      <form className='d-flex w-75 align-items-center justify-content-center p-3' onSubmit={handleSubmit((data) => {
-        getLatLon(data.city, country, data.state)
-        document.querySelector('.city').value = '';
-        document.querySelector('.state').value = '';
-      })}>
+      <form className='d-flex w-75 align-items-center justify-content-center p-3 position-relative' style={{height: "125px", top: "-25px"}} onSubmit={handleSubmit(onSubmit)}>
         <label>Country</label>
         <select 
         className="form-select mx-2" 
@@ -91,8 +102,17 @@ const SearchBar = () => {
             <option key={country.isoCode} value={country.isoCode}>{country.name}</option>
           )}
         </select>
-        <label>City</label><input className="city form-control mx-2" type="text" placeholder="Enter..." {...register("city", { required: "This is required." })} />
+        
+        <label>City</label>
+        <input className="city form-control mx-2" type="text" placeholder="Enter..." {...register("city", { required: "This is required." })} />
+        {errors.city?.type === "required" && (
+        <p className='text-danger m-0 position-absolute' style={{bottom: '15px', right: '100px'}}>*City and State are Required</p>
+      )}
+      
         <label>State</label><input className="state form-control mx-2 " type="text" placeholder="Enter..." {...register("state", { required: "This is required." })} />
+        {errors.state?.type === "required" && (
+        <p className='text-danger m-0 position-absolute' style={{bottom: '15px', right: '100px'}}>*City and State are Required</p>
+      )}
         <button className='btn btn-primary ml-2'>Submit</button>
       </form>
     )
