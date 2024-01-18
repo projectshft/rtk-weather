@@ -1,36 +1,44 @@
 'use client';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSearch } from '../../store/slices/weather';
+import { fetchSearch } from '../store/slices/weather';
 
-export function SearchFunc () {
+/**
+ * Provides search bar and retrieves the input.
+ * @returns Search bar with error and submit handler.
+ */
+export function SearchBarFunc () {
   const error = useSelector((state) => state.weather.error);
   const dispatch = useDispatch();
   const [search, setSearch] = useState('');
 
+  /**
+   * Prevents the page from reloading on submit, dispatches the search to the reducer, and resets the state to an empty string.
+   * @param e information received when the form is submitted.
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(fetchSearch(search));
-    setSearch('')
+    setSearch('');
   };
 
-  // handles errors like 404 to display the proper directions
-  const renderError = () => {
+  /**
+   * Loads errors to display based on GET responses.
+   * @returns "Please enter a valid city name" if error 404 is provided.
+   * @returns Error with API if any other error code is provided.
+   */
+  const handleError = () => {
     if (error) {
       if (error.includes('404')) {
         return <span>Please enter a valid city name.</span>
       } else {
         return <span className='alert alert-danger'>Error with API, please try again later.</span>
-      }
-    }
+      };
+    };
   };
   
   return (
     <div>
-      <header className='center'>
-        <h1>Weather Forecast</h1>
-        <br/>
-      </header>
       <form onSubmit={handleSubmit}>
         <div>
           <input 
@@ -46,9 +54,9 @@ export function SearchFunc () {
           </button>
         </div>
         <div className='errors'>
-          {renderError()}
+          {handleError()}
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
