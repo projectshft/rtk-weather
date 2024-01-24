@@ -4,6 +4,7 @@ export const forecastSlice = createSlice({
   name: "forecasts",
   initialState: {
     forecasts: [],
+    forecast: {},
   },
   reducers: {},
 });
