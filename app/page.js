@@ -1,95 +1,47 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+"use client";
+import Image from "next/image";
+import { CitySearch } from "./components/citySearch";
+import { useSelector } from "react-redux";
+import React from "react";
+import { CityWeather } from "./components/cityWeather";
+export default function Forecasts() {
+  const fiveDayForecast = useSelector(
+    (state) => state.forecasts.allCityForecasts
+  );
 
-export default function Home() {
+  const errors = useSelector((state) => state.forecasts.error);
+
+  const allForecasts = fiveDayForecast.map((forecast, i) => {
+    return <CityWeather key={i} weatherReport={forecast} />;
+  });
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
+    <main>
+      <CitySearch />
+      {errors && (
         <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+          <p className="text-center text-danger">{errors}</p>
         </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+      )}
+      <div className="container mt-5">
+        {fiveDayForecast.length > 0 && (
+          <div className="row justify-content-center mt-3 border-bottom border-secondary pb-1">
+            <div className="col-2 align-self-center text-center  display-6">
+              <span>City</span>
+            </div>
+            <div className="col-3 align-self-center text-center display-6">
+              <span>temperature</span>
+            </div>
+            <div className="col-3 align-self-center text-center  fw- display-6">
+              <span>pressure</span>
+            </div>
+            <div className="col-3 align-self-center text-center display-6">
+              <span>humidty</span>
+            </div>
+          </div>
+        )}
+        {allForecasts}
       </div>
     </main>
-  )
+  );
 }
