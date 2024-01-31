@@ -3,8 +3,6 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const cities = localStorage.getItem('default') ? [JSON.parse(localStorage.getItem('default'))] : [];
 
-console.log(cities)
-
 export const citiesSlice = createSlice({
   name: 'cities',
   initialState: {
@@ -17,9 +15,7 @@ export const citiesSlice = createSlice({
     removeCity: (state, action) => {
 
       const cityToRemove = state.cities.find(city => city.id == action.payload && city.default);
-      console.log(action.payload)
-      console.log(state.cities[0])
-      console.log(cityToRemove)
+      
       if (cityToRemove) {
         localStorage.removeItem('default');
       }

@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux';
 const CityList = () => {
 
   const cities = useSelector(state => state.cities.cities);
-  console.log(cities)
 
   if (cities.length === 0) {
     return (

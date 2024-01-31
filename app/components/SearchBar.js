@@ -28,7 +28,6 @@ const SearchBar = () => {
       humidity: weatherData.map(item => item.main.humidity),
       avgHumidity: Math.floor(weatherData.map(item => item.main.humidity).reduce((a, b) => a + b, 0) / weatherData.map(item => item.main.humidity).length)
     }
-    console.log(cityObj)
     dispatch(addCity(cityObj))
   }
 
@@ -45,16 +44,19 @@ const SearchBar = () => {
 
   const getLatLon = async (city, country, state = '') => {
     let url = `https://api.openweathermap.org/geo/1.0/direct?q=${city},${state},${country}&limit=1&appid=${process.env.NEXT_PUBLIC_OPEN_WEATHER_API_KEY}`
-
     console.log(url)
     axios.get(url)
       .then((response) => {
+        if(response.data[0].name !== "US") {
+          setCountry([countries.find(country => country.name === response.data[0].name), response.data[0].name])
+          console.log(country)
+        } else {
         if(response.data.length === 0) {
           alert(`No city found with the name ${city}, ${state}`)
         } else {
           let officialState = response.data[0].state;
         getWeather(response.data[0].lat, response.data[0].lon, officialState)
-  }})
+  }}})
   }
 
   const onSubmit = (data) => {
@@ -63,7 +65,6 @@ const SearchBar = () => {
     if(country[0] === "840") {
     document.querySelector('.state').value = '';
     }
-    console.log(errors);
   }
 
     return (
