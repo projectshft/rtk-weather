@@ -1,95 +1,95 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+'use client';
+import SearchBar from './components/searchBar'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchWeatherAPI  } from './store/slices/weatherSlice';
+import { SparklinesLine, Sparklines, SparklinesReferenceLine } from 'react-sparklines';
 
-export default function Home() {
+function getHighLow(data) {
+	if (data.length === 0) return { high: 0, low: 0 };
+	const high = Math.round(Math.max(...data));
+	const low = Math.round(Math.min(...data));
+	return { high, low };
+}
+
+function averageTemps(data) {
+	if (data.length === 0) return 0;
+	const sum = data.reduce((accumulator, value) => accumulator + value, 0);
+	return Math.round(sum / data.length);
+}
+
+export default function Home () {
+  const dispatch = useDispatch ()
+  const { city, temperature, pressure, humidity, loading, error } = 
+    useSelector((state) => state.weather)
+
+  const handleSearch = (searchCity) => {
+	dispatch (fetchWeatherAPI(searchCity));
+  };
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+		<div className='smaller'>
+			<div className='boxes'>
+				<h1 className='page-title'>
+						Basic RTK Weather App
+				</h1>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+				<SearchBar onSearch={handleSearch} /> 
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+				{loading && <p className='Slow-ding'>Be super patient or you'll run out of time.</p>}
+				{error && <p className='error'>Error: {error}</p>}
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+				{city && (
+					<div className='big-container'>
+						<h2 className='city-name-render'>
+							Weather in {city.name}
+						</h2>
+						<div className='render-container'>
+						<div className='spark-box'>
+							<h3 className='temperature-title'>
+								Temperature
+							</h3>
+							<Sparklines data={temperature} height={40}>
+    							<SparklinesLine color='blue' />
+    							<SparklinesReferenceLine type="avg" />
+								<SparklinesLine color='blue' style={{ strokeDasharray: '2, 2' }} />
+        						<SparklinesLine color='blue' style={{ strokeDasharray: '2, 2' }} />
+							</Sparklines>
+							<p className='average-temp-display'>
+								Average 5-day Temperature: {averageTemps(temperature)}°F
+							</p>
+							<p className='average-temp-display'>High: {getHighLow(temperature).high}°F</p>
+      						<p className='average-temp-display'>Low: {getHighLow(temperature).low}°F</p>
+						</div>
+						<div className='spark-box'>
+							<h3 className='pressure-title'>
+								Pressure
+							</h3>
+							<Sparklines data={pressure} height={40}>
+    							<SparklinesLine color='green' />
+								<SparklinesReferenceLine type="avg" />
+							</Sparklines>
+							<p className='average-pressure-display'>
+								Average 5-day Pressure: {averageTemps(pressure)} hPa
+							</p>
+						</div>
+						<div className='spark-box'>
+							<h3 className='humidity-title'>
+								Humidity
+							</h3>
+							<div className='sparkline-box'>
+							<Sparklines data={humidity} height={40}>
+    							<SparklinesLine color='purple' />
+    							<SparklinesReferenceLine type="avg" />
+							</Sparklines>
+							</div>
+							<p className='average-humidity-display'>
+								Average: {averageTemps(humidity)}%
+							</p>
+						</div>
+						</div>
+					</div>
+				)}
+			</div>
+		</div>
+	);
 }
