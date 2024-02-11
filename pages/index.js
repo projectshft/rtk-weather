@@ -5,6 +5,7 @@ import '../app/globals.css';
 import useWeather from '../hooks/useWeather';
 import Chart from '../components/Chart';
 import { fetchWeatherData } from '../utils/api'; 
+import '../app/globals.css'; 
 
 const IndexPage = () => {
   const [city, setCity] = useState('');
@@ -23,21 +24,22 @@ const IndexPage = () => {
   };
 
   return (
-    <div>
-      <h1>Redux Weather App</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="index-container">
+      <h1 className="main-title">Weather App</h1>
+      <form onSubmit={handleSubmit} className="search-form">
         <input
           type="text"
           value={city}
           onChange={(e) => setCity(e.target.value)}
           placeholder="Enter city"
+          className="search-input"
         />
-        <button type="submit">Search</button>
+        <button type="submit" className="search-button">Search</button>
       </form>
       {state.loading && <p>Loading...</p>}
       {state.error && <p>Error: {state.error}</p>}
       {state.weatherData && state.weatherData.list && (
-        <div>
+        <div className="chart-container">
           <Chart data={state.weatherData.list.map(item => item.main.temp)} title="Temperature (F)" />
           <Chart data={state.weatherData.list.map(item => item.main.pressure)} title="Pressure" />
           <Chart data={state.weatherData.list.map(item => item.main.humidity)} title="Humidity" />

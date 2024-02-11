@@ -6,8 +6,8 @@ const Chart = ({ data, title }) => {
   console.log('Chart Component Props - Title:', title);
   
   const sparklinesStyle = {
-    height: '200px', 
-    width: '200px'   
+    height: '250px', 
+    width: '250px'   
   };
 
   return (
