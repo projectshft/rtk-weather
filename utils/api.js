@@ -1,7 +1,8 @@
-const API_KEY = process.env.REACT_APP_OPENWEATHER_API_KEY;
+const API_KEY = `235b291d30b715c64c5632322d291bc1`;
 
-const fetchWeatherData = async (city) => {
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`;
+const fetchWeatherData = async (city, units = 'metric') => {
+  const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=${units}`;
+
   try {
     const response = await fetch(url);
     if (!response.ok) {
