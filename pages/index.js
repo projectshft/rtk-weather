@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Provider } from 'react-redux';
 import store from '../redux/store'; 
-import '../app/globals.css';
 import useWeather from '../hooks/useWeather';
 import Chart from '../components/Chart';
 import { fetchWeatherData } from '../utils/api'; 
