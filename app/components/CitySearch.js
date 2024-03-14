@@ -1,6 +1,6 @@
 'use client';
 import { useDispatch } from 'react-redux';
-import { addNewCity, fetchData } from '../store/slices/city';
+import { fetchData } from '../store/slices/city';
 
 
 
@@ -13,6 +13,8 @@ const CitySearch = () => {
 	}
 
 	return (
+    <>
+    <h1 style={{textAlign: "center", marginTop: "50px"}}>Weather Data</h1>
 		<form class="search-city" onSubmit={handleSubmit}>
             <div class="form-group d-flex">
               <input
@@ -21,12 +23,14 @@ const CitySearch = () => {
                 id="search-city"
                 type="text"
                 placeholder="Enter City"
+                style={{marginTop: "60px"}}
               />
-              <button type="submit" class="btn btn-primary search ms-2">
+              <button type="submit" class="btn btn-primary search ms-2" style={{marginTop: "60px"}}>
                 Search
               </button>
             </div>
           </form>
+          </>
 	);
 };
 

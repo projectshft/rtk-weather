@@ -37,7 +37,7 @@ export const citySlice = createSlice({
         temperature.push(temp);
         pressure.push(curr.main.pressure);
         humidity.push(curr.main.humidity);
-    
+        
       };
         const cityData = {
           cityName,
@@ -45,7 +45,7 @@ export const citySlice = createSlice({
           pressure,
           humidity
         };  
-
+        console.log(cityData.temperature[0])
         state.city.unshift(cityData);
       
 
