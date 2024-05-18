@@ -1,6 +1,6 @@
 'use client'
-import WeatherSearch from "./components/WeatherSearch";
-import WeatherTable from "./components/WeatherTable";
+import { WeatherSearch } from "./components/WeatherSearch";
+import { WeatherTable } from "./components/WeatherTable";
 
 
 export default function Home() {
