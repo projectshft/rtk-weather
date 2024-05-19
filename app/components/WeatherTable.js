@@ -18,7 +18,7 @@ export function WeatherTable() {
             </tr>
           </thead>
           <tbody>
-            {cities.map(cityObj => (<WeatherTableRow city={cityObj.data}/>))}
+            {cities.map(cityObj => (<WeatherTableRow city={cityObj} key={cityObj.city.id}/>))}
           </tbody>
         </table>
       </div>

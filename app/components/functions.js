@@ -32,23 +32,22 @@ export const convertKToF = (temp) => {
 };
 
 export const getHighsAndLows = (arr) => {
+  // Iterates through the data points grouped by day and returns the high and low grouped by day
+
   const newArr = []
   
-  for (const a in arr) {
-    const subarr = arr[a];
-    let high = 0;
-    let low = 0;
+  arr.forEach(subarr => {
     
-    for (let s = 0; s < subarr.length - 1; s++) {
-      high, low = subarr[s];
-      const nextValue = subarr[s+1];
+    const high = subarr.reduce((acc, cur) => {
+      return acc > cur ? acc : cur;
+    })
 
-      high = high > nextValue ? high : nextValue;
-      low = low < nextValue ? low : nextValue;
-    }
+    const low = subarr.reduce((acc, cur) => {
+      return acc <= cur ? acc : cur;
+    })
+
     newArr.push(high, low);
-  }
+  })
 
-  console.log(newArr);
   return newArr;
 };

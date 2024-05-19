@@ -1,5 +1,5 @@
-import { Sparklines, SparklinesLine, SparklinesReferenceLine } from 'react-sparklines';
 import { getItemsPerDay, getAvgItemsPerDay, avg, convertKToF, getHighsAndLows } from './functions';
+import { NewSparkline } from './NewSparkline';
 
 export function WeatherTableRow({ city }) {
 
@@ -25,24 +25,15 @@ export function WeatherTableRow({ city }) {
     <tr>
       <td>{city.city.name}, {city.city.country}</td>
       <td>
-        <Sparklines data={highAndLowTemps}>
-          <SparklinesLine color='orange'/>
-          <SparklinesReferenceLine type='avg'/>
-        </Sparklines>
+        <NewSparkline data={highAndLowTemps} color='orange'/>
         <div>Avg: {avg(avgTempsPerDay)} F</div> {/* The average of the temp averages*/}
       </td>
       <td>
-        <Sparklines data={highAndLowPressures}>
-          <SparklinesLine color='green'/>
-          <SparklinesReferenceLine type='avg'/>
-        </Sparklines>
+        <NewSparkline data={highAndLowPressures} color='green'/>
         <div>Avg: {avg(avgPressuresPerDay)} hPa</div> {/* The average of the pressure averages*/}
       </td>
       <td>
-        <Sparklines data={highAndLowHumidities}>
-          <SparklinesLine color='blue'/>
-          <SparklinesReferenceLine type='avg'/>
-        </Sparklines>
+        <NewSparkline data={highAndLowHumidities} color='blue'/>
         <div>Avg: {avg(avgHumiditiesPerDay)} %</div> {/* The average of the humidity averages*/}
       </td>
     </tr>

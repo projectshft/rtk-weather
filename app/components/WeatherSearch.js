@@ -1,26 +1,19 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { fetchForecast } from '../store/slices/cities';
 
 export function WeatherSearch() {
   const dispatch = useDispatch();
-  
-  const API_KEY = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
-  
   const [search, setSearch] = useState('');
 
   const handleSubmitClick = async () => {
     try {
-      
       dispatch(fetchForecast(search));
-
-      // Clear the input field
-      setSearch('');
+      setSearch(''); // Clear the input field
 
     } catch (error) {
       console.error(error);
-      setSearch('');
+      setSearch(''); // Clear the input field
     }
   };
 

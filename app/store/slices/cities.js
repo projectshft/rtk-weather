@@ -12,13 +12,13 @@ export const fetchForecast = createAsyncThunk('cities/fetchForecast', async sear
   // Get the forecast for the coordinates of the searched city
   const forcastResponse = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${API_KEY}`);
 
-  return forcastResponse;
+  return forcastResponse.data;
 }); 
 
 export const cityWeatherSlice = createSlice({
-	name: 'cityWeather', // The name to reference when accessing the slice.
+	name: 'cities', // The name to reference when accessing the slice.
 	initialState: { // The slice starts empty when the app initially loads.
-    cities: [], //citiesArr
+    cities: [], // Stores each searched city in an array
     status: 'idle',
     error: null,
   },
