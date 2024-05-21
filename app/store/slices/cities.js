@@ -11,7 +11,6 @@ export const fetchForecast = createAsyncThunk('cities/fetchForecast', async sear
 
   // Get the forecast for the coordinates of the searched city
   const forcastResponse = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${API_KEY}`);
-  console.log(forcastResponse.data);
 
   return forcastResponse.data;
 }); 
