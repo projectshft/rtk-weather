@@ -10,7 +10,7 @@ const useSchema = (cities) =>
     searchTerm: yup
       .string()
       .required('A city name is required to search.')
-      // .test( // Check if this city has already been searched to avoid duplicates in state
+      // .test( 
       //   'already-searched',
       //   'Weather data for this city has already been searched.',
       //   (value) => {
@@ -25,6 +25,8 @@ export function WeatherSearch() {
   const cities = useSelector((state) => state.cities.cities);
   const [search, setSearch] = useState('');
   const schema = useSchema(cities);
+  const [errorMessages, setErrorMessages] = useState({});
+
   const { // using react-hook-form and yup for form validation
     register,
     handleSubmit,
@@ -33,9 +35,22 @@ export function WeatherSearch() {
     resolver: yupResolver(schema),
   });
 
+  const validateSearch = (searchTerm) => {
+    const localErrors = {};
+    // Check if this city has already been searched to avoid duplicates in state
+    const alreadySearched = cities.map(city => city.city.name.toLowerCase()).includes(search.toLowerCase());
+    if (alreadySearched) {
+      localErrors.alreadySearched = 'This city has already been searched.'
+    }
+    setErrorMessages(localErrors);
+    return Object.keys(localErrors).length === 0; // Returns true if no errors
+  }
+  
   const handleFormSubmit = async () => {
     try {
-      dispatch(fetchForecast(search)); // Runs AsyncThunk to grab weather data
+      if(validateSearch(search)) {
+        dispatch(fetchForecast(search)); // Runs AsyncThunk to grab weather data
+      }
     } catch (error) {
       console.error(error);
     }
@@ -65,6 +80,9 @@ export function WeatherSearch() {
       <div className='d-flex justify-content-center'>
         {errors.searchTerm?.message && (
           <div className='text-danger'>{errors.searchTerm?.message}</div>
+        )}
+        {errorMessages.alreadySearched && (
+          <div className='text-danger'>{errorMessages.alreadySearched}</div>
         )}
       </div>
     </div>
