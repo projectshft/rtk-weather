@@ -2,7 +2,6 @@ import { getItemsPerDay, getAvgItemsPerDay, avg, convertKToF, getHighsAndLows } 
 import { NewSparkline } from './NewSparkline';
 
 export function WeatherTableRow({ city }) {
-
   /* Logic for temps */
   const temps = city.list.map(weather => weather.main.temp); // Gets temps for next 5 days
   const allTempsPerDay = getItemsPerDay(temps); // Groups temps by day

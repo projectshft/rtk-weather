@@ -8,9 +8,10 @@ export const fetchForecast = createAsyncThunk('cities/fetchForecast', async sear
   const coordResponse = await axios.get(`http://api.openweathermap.org/geo/1.0/direct?q=${search}&limit=1&appid=${API_KEY}`);
       
   const coordinates = {lat: coordResponse.data[0].lat, lon: coordResponse.data[0].lon};
-  
+
   // Get the forecast for the coordinates of the searched city
   const forcastResponse = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${API_KEY}`);
+  console.log(forcastResponse.data);
 
   return forcastResponse.data;
 }); 
@@ -22,7 +23,7 @@ export const cityWeatherSlice = createSlice({
     status: 'idle',
     error: null,
   },
-	reducers: {}, // Reducers is where the action functions are made.
+	reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchForecast.pending, (state) => {
