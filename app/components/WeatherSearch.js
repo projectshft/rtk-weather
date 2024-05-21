@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchForecast } from '../store/slices/cities';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -11,20 +10,21 @@ export function WeatherSearch() {
       .string()
       .required('A city name is required to search.')
       .test('already-searched', 'This city has already been searched.', (value) => {
-        return !cities.map(city => city.city.name.toLowerCase()).includes(value?.toLowerCase());
+        return !searches.includes(value?.toLowerCase());
       })
   });
   const dispatch = useDispatch();
-  const cities = useSelector((state) => state.cities.cities);
   const [search, setSearch] = useState('');
+  const [searches, setSearches] = useState([]);
 
   const { // using react-hook-form and yup for form validation
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema), });
-
+  
   const handleFormSubmit = async () => {
+    setSearches([...searches, search.toLowerCase()]);
     try {
       dispatch(fetchForecast(search));
     } catch (error) {
