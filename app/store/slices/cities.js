@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-const API_KEY = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
+// Hard-coded key for demonstration purposes
+//process.env.NEXT_PUBLIC_WEATHER_API_KEY;
+const API_KEY = '9d545ab1acd07f6fe196233174125a11'
 
 export const fetchForecast = createAsyncThunk('cities/fetchForecast', async search => {
   // Get the coordinates of the city that has been searched
