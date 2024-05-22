@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "jsdoc": "./node_modules/jsdoc/jsdoc.js -c ./jsdoc.json"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.4.0",
@@ -24,5 +25,8 @@
     "react-sparklines": "^1.7.0",
     "redux": "^5.0.1",
     "yup": "^1.4.0"
+  },
+  "devDependencies": {
+    "jsdoc": "^4.0.3"
   }
 }
