@@ -6,13 +6,27 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "jsdoc": "./node_modules/jsdoc/jsdoc.js -c ./jsdoc.json"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.4.0",
+    "@reduxjs/toolkit": "^2.2.4",
+    "axios": "^1.6.8",
+    "bootstrap": "^5.3.3",
     "eslint": "8.50.0",
     "eslint-config-next": "13.5.3",
-    "next": "13.5.3",
+    "next": "^14.2.3",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-bootstrap": "^2.10.2",
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.51.4",
+    "react-redux": "^9.1.2",
+    "react-sparklines": "^1.7.0",
+    "redux": "^5.0.1",
+    "yup": "^1.4.0"
+  },
+  "devDependencies": {
+    "jsdoc": "^4.0.3"
   }
 }
