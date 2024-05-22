@@ -1,7 +1,10 @@
+/**
+ * Takes an array of 40 data points and groups them into 5 sub-arrays
+ * Each sub-array represents a day.
+ * @param {Array} arr
+ * @returns {Array}
+ */
 export const getItemsPerDay = (arr) => {
-  // Split the array of 40 data points into 5 sub-arrays.
-  // Each array represents a day of data.
-
   const chunk = 8;
 
   const groups = arr.reduce((result, item, index) => {
@@ -13,27 +16,42 @@ export const getItemsPerDay = (arr) => {
   return groups;
 };
 
+/**
+ * Iterates through the data points grouped by day and returns the average of each group
+ * @param {Array} arr 
+ * @returns {Array}
+ */
 export const getAvgItemsPerDay = (arr) => {
-  // Iterates through the data points grouped by day and returns the average grouped by day
   return arr.reduce((result, item) => {
     result.push(avg(item));
     return result;
   }, []);
 };
 
+/**
+ * Returns an average of a supplied array of numbers
+ * @param {Array} arr 
+ * @returns {Number}
+ */
 export const avg = (arr) => {
-  // Returns an average of a supplied array of numbers
   return Math.round(arr.reduce((result, item) => result + item, 0 ) / arr.length);
 };
 
+/**
+ * Assuming that the passed value is in Kelvin, this function will convert it to Fahrenheit.
+ * @param {Number} temp 
+ * @returns {Number}
+ */
 export const convertKToF = (temp) => {
-  // Assuming that the passed value is Kelvin, this function will convert it to Fahrenheit
   return Math.round(1.8 * (temp - 273) + 32);
 };
 
+/**
+ * Iterates through the data points grouped by day and returns the high and low for each day
+ * @param {Array} arr 
+ * @returns {Array}
+ */
 export const getHighsAndLows = (arr) => {
-  // Iterates through the data points grouped by day and returns the high and low grouped by day
-
   const newArr = []
   
   arr.forEach(subarr => {

@@ -30,7 +30,7 @@ export const cityWeatherSlice = createSlice({
       })
       .addCase(fetchForecast.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.cities.push(action.payload);
+        state.cities.splice(0, 0, action.payload);
       })
       .addCase(fetchForecast.rejected, (state, action) => {
         state.status = 'failed';

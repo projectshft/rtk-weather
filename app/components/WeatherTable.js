@@ -2,6 +2,11 @@
 import { WeatherTableRow } from './WeatherTableRow';
 import { useSelector } from 'react-redux';
 
+/**
+ * This compenent renders a table for weather data.
+ * Includes columns for city name, temp, pressure, and humidity.
+ * @returns {ReactNode} A React element that renders a table to display the weather.
+ */
 export function WeatherTable() {
   const cities = useSelector((state) => state.cities.cities);
 
