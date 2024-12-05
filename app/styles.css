@@ -1,0 +1,30 @@
+.row {
+  text-align: center;
+}
+
+.row td {
+  padding-top: 20px;
+}
+
+.row tr {
+  text-align: center;
+}
+
+.city-name {
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-top: 35px;
+}
+
+.header {
+  margin-top: 15px;
+}
+
+.error-message {
+  color: red;
+}
+
+.btn {
+  margin-left: 3px;
+  margin-top: -3px;
+}
