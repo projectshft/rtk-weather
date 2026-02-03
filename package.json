@@ -2,17 +2,45 @@
   "name": "parsity_rtk_weather",
   "version": "0.1.0",
   "private": true,
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "printWidth": 80,
+    "trailingComma": "es5"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "eslintConfig": {
+    "extends": [
+      "wesbos/typescript",
+      "prettier"
+    ]
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
+    "@reduxjs/toolkit": "^2.11.2",
+    "axios": "^1.13.3",
+    "bootstrap": "^5.3.8",
     "eslint": "8.50.0",
     "eslint-config-next": "13.5.3",
+    "eslint-config-wesbos": "^4.3.2",
     "next": "13.5.3",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.71.1",
+    "react-redux": "^9.2.0",
+    "react-sparklines": "^1.7.0",
+    "uuid": "^13.0.0",
+    "yup": "^1.7.1"
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.8.1"
   }
 }
