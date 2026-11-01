@@ -1,6 +1,10 @@
 import {createSlice, createAsyncThunk, type PayloadAction} from '@reduxjs/toolkit';
 import {formatCity, fetchData} from '../utils';
 
+type Prettify<T> = {
+    [K in keyof T]: T[K];
+};
+
 type CityLocation = {
     name: string;
     admin1?: string;
@@ -12,21 +16,25 @@ type CityCoordinates = {
     longitude: number;
 };
 
-type CityData = CityLocation & CityCoordinates;
+type CityData = Prettify<CityLocation & CityCoordinates>;
 
-type FetchWeatherRequest = CityData & {
-    source: 'storage' | 'search';
-};
+type FetchWeatherRequest = Prettify<
+    CityData & {
+        source: 'storage' | 'search';
+    }
+>;
 
-type WeatherCity = CityData & {
-    temperature: number[];
-    windSpeed: number[];
-    precipitation: number[];
-};
+type WeatherCity = Prettify<
+    CityData & {
+        temperature: number[];
+        windSpeed: number[];
+        precipitation: number[];
+    }
+>;
 
 type WeatherState = {
-    isLoading: boolean;
     isInitialized: boolean;
+    isLoading: boolean;
     cities: WeatherCity[];
     error: string | null;
 };
@@ -40,8 +48,8 @@ type WeatherResponse = {
 };
 
 const initialState: WeatherState = {
-    isLoading: false,
     isInitialized: false,
+    isLoading: false,
     cities: [],
     error: null,
 };
